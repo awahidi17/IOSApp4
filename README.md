@@ -4,7 +4,7 @@ A native iOS application built with **SwiftUI** for logging workouts, visualizin
 
 ---
 
-## ✨ SwiftUI Cookbook Features Implemented
+## ✨ SwiftUI Cookbook Features — Assignment 7
 
 Six+ new features from the *SwiftUI Cookbook* (Wenderlich, 2021, Kodeco) were applied to this custom app:
 
@@ -18,6 +18,20 @@ Six+ new features from the *SwiftUI Cookbook* (Wenderlich, 2021, Kodeco) were ap
 8. **Custom Animated Progress Ring** (`TimerRingView.swift`) — `Circle().trim()` with an `AngularGradient` stroke, animated with implicit `.animation` on progress changes.
 
 Data is persisted between launches via **UserDefaults JSON serialization** in the view model layer.
+
+---
+
+## ✨ SwiftUI Cookbook Features — Assignment 8
+
+Six+ additional features added to the progressive prototype:
+
+9. **NavigationLink Push Navigation** (`WorkoutListView.swift` → `WorkoutDetailView.swift`) — Tapping a workout row pushes a full detail screen onto the `NavigationStack`.
+10. **LazyVGrid Layout** (`WorkoutDetailView.swift`) — Two-column grid of metric tiles (duration, calories, date, favorite) built with `LazyVGrid` and `GridItem`.
+11. **ShareLink** (`WorkoutDetailView.swift`) — Toolbar `ShareLink` opens the system share sheet with a text summary of the workout.
+12. **@AppStorage Persistence** (`SettingsView.swift`, `WorkoutListView.swift`) — Name, weekly goal, and a "show calories" toggle persist via `@AppStorage`; the toggle live-updates the workout list rows across tabs.
+13. **Gauge Progress View** (`SettingsView.swift`) — A `Gauge` visualizes this week's logged minutes against the user's adjustable weekly goal (with `Slider` input).
+14. **Confirmation Dialog** (`SettingsView.swift`) — `.confirmationDialog` guards the destructive "Reset All Data" action before restoring sample workouts.
+15. **Alert Presentation** (`TimerRingView.swift`) — `.alert` congratulates the user when the countdown completes, with a "New Session" shortcut.
 
 ---
 
@@ -35,8 +49,10 @@ Data is persisted between launches via **UserDefaults JSON serialization** in th
 │   ├── AppRootView.swift            # Master TabView layout container
 │   ├── 📂 Components/
 │   │   ├── WorkoutListView.swift    # Searchable log with swipe actions & context menus
+│   │   ├── WorkoutDetailView.swift  # NavigationLink detail with LazyVGrid & ShareLink
 │   │   ├── StatsDashboardView.swift # Swift Charts weekly activity dashboard
-│   │   └── TimerRingView.swift      # Combine timer + animated gradient progress ring
+│   │   ├── TimerRingView.swift      # Combine timer + animated ring + completion alert
+│   │   └── SettingsView.swift       # @AppStorage prefs, goal Gauge, reset dialog
 │   └── 📂 Modals/
 │       └── AddWorkoutModalView.swift # Sheet-presented input form
 ```

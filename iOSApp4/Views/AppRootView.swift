@@ -33,6 +33,12 @@ struct AppRootView: View {
                 .tabItem {
                     Label("Timer", systemImage: "timer")
                 }
+
+            // Tab 4: user preferences, weekly goal gauge, data reset
+            SettingsView()
+                .tabItem {
+                    Label("Settings", systemImage: "gearshape.fill")
+                }
         }
     }
 }

@@ -39,7 +39,13 @@ struct WorkoutListView: View {
         NavigationStack {
             List {
                 ForEach(filteredWorkouts) { workout in
-                    WorkoutRowCard(workout: workout)
+                    // FEATURE 9: tapping a row pushes the detail screen
+                    // onto the NavigationStack.
+                    NavigationLink {
+                        WorkoutDetailView(workout: workout)
+                    } label: {
+                        WorkoutRowCard(workout: workout)
+                    }
                         // FEATURE 3: trailing swipe deletes,
                         // leading swipe toggles favorite.
                         .swipeActions(edge: .trailing) {
@@ -101,6 +107,10 @@ struct WorkoutListView: View {
 struct WorkoutRowCard: View {
     let workout: Workout
 
+    // FEATURE 12 (cross-feature): Settings toggle read via @AppStorage
+    // controls whether calories appear in the row subtitle.
+    @AppStorage("show_calories") private var showCalories = true
+
     /// Per-type theme drives the icon gradient.
     private var theme: AppTheme { AppTheme.current(for: workout.type) }
 
@@ -116,7 +126,10 @@ struct WorkoutRowCard: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text(workout.title)
                     .font(.headline)
-                Text("\(workout.type.rawValue) • \(workout.minutes) min • \(workout.calories) cal")
+                // Calories shown only when enabled in Settings.
+                Text(showCalories
+                     ? "\(workout.type.rawValue) • \(workout.minutes) min • \(workout.calories) cal"
+                     : "\(workout.type.rawValue) • \(workout.minutes) min")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                 Text(workout.date, style: .date)

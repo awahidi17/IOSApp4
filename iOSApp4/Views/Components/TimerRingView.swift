@@ -27,6 +27,10 @@ struct TimerRingView: View {
     @State private var remainingSeconds = 5 * 60
     @State private var isRunning = false
 
+    // ★ FEATURE 15 — Alert presentation (.alert modifier, SwiftUI
+    // Cookbook: "Alerts & Action Sheets"). Shown when the countdown ends.
+    @State private var showingDoneAlert = false
+
     // FEATURE 7: a Combine publisher that fires every second on the
     // main run loop. Views subscribe with .onReceive below.
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
@@ -125,9 +129,19 @@ struct TimerRingView: View {
                 if remainingSeconds > 0 {
                     remainingSeconds -= 1
                 } else {
-                    // Session finished — stop the countdown.
+                    // Session finished — stop and celebrate.
                     isRunning = false
+                    showingDoneAlert = true
                 }
+            }
+            // FEATURE 15: completion alert with a reset shortcut.
+            .alert("Session Complete! 🎉", isPresented: $showingDoneAlert) {
+                Button("New Session") {
+                    remainingSeconds = selectedMinutes * 60
+                }
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text("You finished your \(selectedMinutes)-minute session. Log it in the Workouts tab!")
             }
         }
     }

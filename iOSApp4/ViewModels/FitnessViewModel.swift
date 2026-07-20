@@ -48,6 +48,12 @@ class FitnessViewModel: ObservableObject {
         workouts[index].isFavorite.toggle()
     }
 
+    /// Wipe all logged data and restore the sample workouts.
+    /// Called from Settings after the user confirms the reset dialog.
+    func resetToSamples() {
+        workouts = Workout.sampleData
+    }
+
     // MARK: - Derived Stats (used by the Stats dashboard)
 
     /// Total minutes across all logged workouts.
